@@ -1,0 +1,175 @@
+---
+import {
+  Sparkles,
+  RotateCcw,
+  Copy,
+  Printer,
+  Share2,
+  Plus,
+  Search,
+  CircleCheckBig,
+} from "@lucide/astro";
+---
+
+<section class="planner-shell" id="planner" aria-labelledby="planner-title" data-planner>
+  <div class="planner-shell__head">
+    <div>
+      <span class="section-kicker">PACKING CHECKLIST</span>
+      <h2 id="planner-title">旅に合う持ち物リストを作る</h2>
+    </div>
+    <button class="button button--quiet button--small" type="button" data-reset>
+      <RotateCcw size={17} />
+      リセット
+    </button>
+  </div>
+
+  <div class="planner-layout">
+    <form class="planner-form" data-planner-form>
+      <fieldset>
+        <legend>行き先</legend>
+        <div class="segmented-control">
+          <label>
+            <input type="radio" name="tripType" value="domestic" checked />
+            <span>国内</span>
+          </label>
+          <label>
+            <input type="radio" name="tripType" value="international" />
+            <span>海外</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="form-grid">
+        <label class="form-field">
+          <span>地域・気候</span>
+          <select name="destination">
+            <option value="standard">一般的な都市</option>
+            <option value="beach">沖縄・海辺・常夏</option>
+            <option value="eastAsia">韓国・台湾など東アジア</option>
+            <option value="longHaul">欧米など長距離</option>
+            <option value="cold">寒い地域・雪国</option>
+          </select>
+        </label>
+
+        <label class="form-field">
+          <span>宿泊数</span>
+          <select name="nights">
+            <option value="0">日帰り</option>
+            <option value="1">1泊2日</option>
+            <option value="2" selected>2泊3日</option>
+            <option value="3">3泊4日</option>
+            <option value="4">4泊5日</option>
+            <option value="5">5泊6日</option>
+            <option value="6">6泊7日</option>
+            <option value="7">7泊以上</option>
+          </select>
+        </label>
+
+        <label class="form-field">
+          <span>時期</span>
+          <select name="season">
+            <option value="spring">春</option>
+            <option value="summer">夏</option>
+            <option value="autumn">秋</option>
+            <option value="winter">冬</option>
+            <option value="rainy">雨の多い時期</option>
+          </select>
+        </label>
+
+        <label class="form-field">
+          <span>移動手段</span>
+          <select name="transport">
+            <option value="flight">飛行機</option>
+            <option value="train">電車・新幹線</option>
+            <option value="car">車</option>
+          </select>
+        </label>
+      </div>
+
+      <fieldset>
+        <legend>旅行スタイル</legend>
+        <div class="choice-grid">
+          <label><input type="checkbox" name="styles" value="solo" /><span>一人旅</span></label>
+          <label><input type="checkbox" name="styles" value="family" /><span>子連れ</span></label>
+          <label><input type="checkbox" name="styles" value="business" /><span>出張</span></label>
+          <label><input type="checkbox" name="styles" value="formal" /><span>式・会食あり</span></label>
+          <label><input type="checkbox" name="styles" value="outdoor" /><span>アウトドア</span></label>
+          <label><input type="checkbox" name="styles" value="onsen" /><span>温泉</span></label>
+        </div>
+      </fieldset>
+
+      <button class="button button--primary button--wide" type="submit">
+        <Sparkles size={19} />
+        持ち物リストを作る
+      </button>
+    </form>
+
+    <section class="packing-result" aria-live="polite" data-result>
+      <div class="result-empty" data-empty>
+        <div class="result-empty__icon"><CircleCheckBig size={34} /></div>
+        <h3>条件を選んで旅じたくを始めよう</h3>
+        <p>2泊3日の国内旅行が選ばれています。</p>
+      </div>
+
+      <div class="result-content" data-result-content hidden>
+        <div class="result-summary">
+          <div>
+            <span class="result-summary__eyebrow" data-trip-summary>国内・2泊3日</span>
+            <h3>あなたの持ち物</h3>
+          </div>
+          <span class="result-count" data-result-count>0点</span>
+        </div>
+
+        <div class="progress-block">
+          <div>
+            <span>準備できたもの</span>
+            <strong data-progress-label>0 / 0</strong>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <span data-progress-bar></span>
+          </div>
+        </div>
+
+        <div class="result-toolbar" aria-label="持ち物の絞り込み">
+          <div class="filter-tabs" data-filter-tabs>
+            <button class="is-active" type="button" data-filter="all">すべて</button>
+            <button type="button" data-filter="open">未準備</button>
+            <button type="button" data-filter="essential">必須</button>
+          </div>
+          <label class="result-search">
+            <Search size={16} />
+            <span class="sr-only">持ち物を検索</span>
+            <input type="search" placeholder="リスト内を検索" data-item-search />
+          </label>
+        </div>
+
+        <div class="packing-groups" data-groups></div>
+
+        <form class="custom-item-form" data-custom-form>
+          <label for="customItem">自分の持ち物を追加</label>
+          <div>
+            <input id="customItem" name="customItem" type="text" maxlength="40" placeholder="例：読みかけの本" />
+            <button class="icon-button icon-button--accent" type="submit" aria-label="持ち物を追加" title="持ち物を追加">
+              <Plus size={20} />
+            </button>
+          </div>
+        </form>
+
+        <div class="result-actions">
+          <button class="button button--secondary" type="button" data-copy>
+            <Copy size={18} />コピー
+          </button>
+          <button class="button button--secondary" type="button" data-print>
+            <Printer size={18} />印刷
+          </button>
+          <button class="button button--secondary" type="button" data-share>
+            <Share2 size={18} />共有
+          </button>
+        </div>
+        <p class="status-message" role="status" data-status></p>
+      </div>
+    </section>
+  </div>
+</section>
+
+<script src="../scripts/planner.js"></script>

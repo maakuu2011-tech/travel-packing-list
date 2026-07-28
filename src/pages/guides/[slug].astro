@@ -1,0 +1,147 @@
+---
+import Layout from "../../components/Layout.astro";
+import { ArrowRight, ListChecks } from "@lucide/astro";
+import { guides } from "../../data/guides.js";
+import { SITE_URL } from "../../../site.config.mjs";
+
+export function getStaticPaths() {
+  return guides.map((guide) => ({
+    params: { slug: guide.slug },
+    props: { guide },
+  }));
+}
+
+const { guide } = Astro.props;
+const pageUrl = new URL(`/guides/${guide.slug}/`, SITE_URL).toString();
+const plannerUrl = `/?${guide.query}#planner`;
+
+const articleStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: guide.title,
+  description: guide.description,
+  mainEntityOfPage: pageUrl,
+  datePublished: "2026-07-28",
+  dateModified: "2026-07-28",
+  author: {
+    "@type": "Organization",
+    name: "旅じたくリスト",
+  },
+};
+
+const breadcrumbStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "トップ",
+      item: SITE_URL,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "持ち物ガイド",
+      item: new URL("/guides/", SITE_URL).toString(),
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: guide.title,
+      item: pageUrl,
+    },
+  ],
+};
+
+const faqStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: guide.faqs.map(([question, answer]) => ({
+    "@type": "Question",
+    name: question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: answer,
+    },
+  })),
+};
+---
+
+<Layout
+  title={`${guide.title}｜旅じたくリスト`}
+  description={guide.description}
+  structuredData={[articleStructuredData, breadcrumbStructuredData, faqStructuredData]}
+>
+  <main>
+    <header class="page-hero">
+      <div class="container page-hero__inner">
+        <nav class="breadcrumb" aria-label="パンくずリスト">
+          <a href="/">トップ</a><span>/</span>
+          <a href="/guides/">持ち物ガイド</a><span>/</span>
+          <span>{guide.title}</span>
+        </nav>
+        <span class="section-kicker">{guide.category}</span>
+        <h1>{guide.title}</h1>
+        <p>{guide.description}</p>
+      </div>
+    </header>
+
+    <div class="page-body">
+      <div class="container article-layout">
+        <article class="article-main">
+          <p>{guide.intro}</p>
+
+          <section>
+            <h2>先に確認する持ち物</h2>
+            <ul class="must-have-list">
+              {guide.mustHaves.map(([name, description]) => (
+                <li>
+                  <strong>{name}</strong>
+                  <span>{description}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {guide.sections.map((section) => (
+            <section>
+              <h2>{section.heading}</h2>
+              <p>{section.body}</p>
+              <ul>
+                {section.points.map((point) => <li>{point}</li>)}
+              </ul>
+            </section>
+          ))}
+
+          <aside class="tip-box">
+            <strong>出発前の確認</strong>
+            <span>{guide.tip}</span>
+          </aside>
+
+          <section>
+            <h2>よくある質問</h2>
+            <div class="faq-list">
+              {guide.faqs.map(([question, answer]) => (
+                <details>
+                  <summary>{question}</summary>
+                  <p>{answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+        </article>
+
+        <aside class="article-sidebar">
+          <ListChecks size={28} color="#1b8075" />
+          <h2>この条件でリストを作る</h2>
+          <p>{guide.tripLabel}向けの条件を入力した状態で、持ち物チェックリストを開きます。</p>
+          <a class="button button--primary" href={plannerUrl}>
+            リストを作る
+            <ArrowRight size={18} />
+          </a>
+        </aside>
+      </div>
+    </div>
+  </main>
+</Layout>

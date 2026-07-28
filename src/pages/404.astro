@@ -1,0 +1,15 @@
+---
+import Layout from "../components/Layout.astro";
+import { ArrowLeft } from "@lucide/astro";
+---
+
+<Layout title="ページが見つかりません｜旅じたくリスト" description="お探しのページは見つかりませんでした。">
+  <main class="not-found">
+    <div>
+      <strong>404</strong>
+      <h1>ページが見つかりません</h1>
+      <p>URLが変更されたか、ページが削除された可能性があります。</p>
+      <a class="button button--primary" href="/"><ArrowLeft size={18} />トップへ戻る</a>
+    </div>
+  </main>
+</Layout>

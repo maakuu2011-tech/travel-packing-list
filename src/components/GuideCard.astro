@@ -1,0 +1,18 @@
+---
+import { ArrowRight, CalendarDays } from "@lucide/astro";
+
+const { guide } = Astro.props;
+---
+
+<article class="guide-card">
+  <div class="guide-card__meta">
+    <span>{guide.category}</span>
+    <span><CalendarDays size={15} />{guide.tripLabel}</span>
+  </div>
+  <h3><a href={`/guides/${guide.slug}/`}>{guide.title}</a></h3>
+  <p>{guide.description}</p>
+  <a class="text-link" href={`/guides/${guide.slug}/`}>
+    詳しく見る
+    <ArrowRight size={17} />
+  </a>
+</article>

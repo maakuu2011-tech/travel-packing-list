@@ -1,0 +1,120 @@
+---
+import Layout from "../components/Layout.astro";
+import Planner from "../components/Planner.astro";
+import GuideCard from "../components/GuideCard.astro";
+import {
+  Check,
+  Save,
+  ShieldCheck,
+  SlidersHorizontal,
+  ArrowRight,
+} from "@lucide/astro";
+import { guides, featuredGuideSlugs } from "../data/guides.js";
+import { SITE_URL } from "../../site.config.mjs";
+
+const featuredGuides = featuredGuideSlugs
+  .map((slug) => guides.find((guide) => guide.slug === slug))
+  .filter(Boolean);
+
+const softwareStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "旅じたくリスト",
+  applicationCategory: "TravelApplication",
+  operatingSystem: "Web",
+  url: SITE_URL,
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "JPY",
+  },
+  description:
+    "国内・海外、宿泊数、季節、移動手段、旅行スタイルから持ち物チェックリストを無料で作成できます。",
+};
+---
+
+<Layout
+  title="旅じたくリスト｜旅行の持ち物チェックリストを無料作成"
+  description="国内・海外、宿泊数、季節、移動手段を選ぶだけ。旅行条件に合う持ち物チェックリストを無料で作成、保存、印刷できます。"
+  structuredData={[softwareStructuredData]}
+>
+  <main>
+    <section class="home-intro">
+      <div class="container home-intro__grid">
+        <div class="home-intro__copy">
+          <span class="section-kicker">無料・登録不要</span>
+          <h1>その旅に必要なものだけ、ひとつのリストに。</h1>
+          <p>
+            行き先、日数、季節を選ぶと、旅行条件に合う持ち物を整理できます。
+            準備状況はこの端末に保存されます。
+          </p>
+          <div class="intro-badges" aria-label="サービスの特徴">
+            <span><Check size={15} />条件別に作成</span>
+            <span><Save size={15} />端末に保存</span>
+            <span><ShieldCheck size={15} />入力内容を送信しない</span>
+          </div>
+        </div>
+        <div class="home-intro__visual">
+          <img
+            src="/images/packing-hero.webp"
+            width="1536"
+            height="1024"
+            alt="衣類や旅行用品をスーツケースへ荷造りしている様子"
+            fetchpriority="high"
+          />
+          <span class="visual-note"><SlidersHorizontal size={17} />旅の条件から自動整理</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="planner-section">
+      <div class="container">
+        <Planner />
+      </div>
+    </section>
+
+    <section class="content-section content-section--white">
+      <div class="container">
+        <div class="benefit-strip">
+          <div>
+            <span class="benefit-icon"><SlidersHorizontal size={22} /></span>
+            <div>
+              <h3>旅ごとに調整</h3>
+              <p>海外、子連れ、出張、海、雪などの条件をリストへ反映します。</p>
+            </div>
+          </div>
+          <div>
+            <span class="benefit-icon"><Save size={22} /></span>
+            <div>
+              <h3>準備状況を保持</h3>
+              <p>チェックした内容と追加した持ち物を同じ端末に保存します。</p>
+            </div>
+          </div>
+          <div>
+            <span class="benefit-icon"><ShieldCheck size={22} /></span>
+            <div>
+              <h3>登録せずに使える</h3>
+              <p>氏名やメールアドレスを入力せず、すぐに持ち物を整理できます。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">PACKING GUIDES</span>
+            <h2>よく使われる持ち物ガイド</h2>
+            <p>行き先や旅行スタイルに合わせて、準備の考え方も確認できます。</p>
+          </div>
+          <a class="text-link" href="/guides/">すべて見る<ArrowRight size={18} /></a>
+        </div>
+        <div class="guide-grid">
+          {featuredGuides.map((guide) => <GuideCard guide={guide} />)}
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

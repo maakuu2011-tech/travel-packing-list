@@ -1,0 +1,46 @@
+---
+import Layout from "../../components/Layout.astro";
+import GuideCard from "../../components/GuideCard.astro";
+import { guides } from "../../data/guides.js";
+
+const categories = [...new Set(guides.map((guide) => guide.category))];
+---
+
+<Layout
+  title="旅行の持ち物ガイド一覧｜旅じたくリスト"
+  description="海外、国内、韓国、台湾、沖縄、子連れ、出張など、行き先・日数・季節別の旅行持ち物ガイドを掲載しています。"
+>
+  <main>
+    <header class="page-hero">
+      <div class="container page-hero__inner">
+        <nav class="breadcrumb" aria-label="パンくずリスト">
+          <a href="/">トップ</a><span>/</span><span>持ち物ガイド</span>
+        </nav>
+        <span class="section-kicker">PACKING GUIDES</span>
+        <h1>旅行の持ち物ガイド</h1>
+        <p>行き先、日数、季節、同行者に合わせて、必要な物と荷造りの考え方を整理しています。</p>
+      </div>
+    </header>
+
+    <div class="page-body">
+      <div class="container">
+        {categories.map((category) => (
+          <section class="content-section" style="padding-top: 0;">
+            <div class="section-head">
+              <div>
+                <h2>{category}</h2>
+                <p>{category}に合わせた持ち物と準備のポイント</p>
+              </div>
+            </div>
+            <div class="guide-grid">
+              {guides
+                .filter((guide) => guide.category === category)
+                .map((guide) => <GuideCard guide={guide} />)}
+            </div>
+          </section>
+        ))}
+      </div>
+    </div>
+  </main>
+</Layout>
+
