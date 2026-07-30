@@ -56,11 +56,14 @@ const softwareStructuredData = {
         </div>
         <div class="home-intro__visual">
           <img
-            src="/images/packing-hero.webp"
+            src="/images/packing-hero-1024.webp"
+            srcset="/images/packing-hero-640.webp 640w, /images/packing-hero-1024.webp 1024w, /images/packing-hero.webp 1536w"
+            sizes="(max-width: 760px) calc(100vw - 28px), (max-width: 1180px) 320px, 459px"
             width="1536"
             height="1024"
             alt="衣類や旅行用品をスーツケースへ荷造りしている様子"
             fetchpriority="high"
+            decoding="async"
           />
           <span class="visual-note"><SlidersHorizontal size={17} />旅の条件から自動整理</span>
         </div>
