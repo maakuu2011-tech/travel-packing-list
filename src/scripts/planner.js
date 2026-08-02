@@ -9,6 +9,7 @@ if (root) {
   const summaryElement = root.querySelector("[data-trip-summary]");
   const progressLabel = root.querySelector("[data-progress-label]");
   const progressBar = root.querySelector("[data-progress-bar]");
+  const uncheckAllButton = root.querySelector("[data-uncheck-all]");
   const itemSearch = root.querySelector("[data-item-search]");
   const statusElement = root.querySelector("[data-status]");
   const customForm = root.querySelector("[data-custom-form]");
@@ -387,6 +388,7 @@ if (root) {
     const percent = total ? Math.round((checkedCount / total) * 100) : 0;
     progressLabel.textContent = `${checkedCount} / ${total}`;
     progressBar.style.width = `${percent}%`;
+    uncheckAllButton.disabled = checkedCount === 0;
   };
 
   const applyFilters = () => {
@@ -535,6 +537,13 @@ if (root) {
   });
 
   itemSearch.addEventListener("input", applyFilters);
+
+  uncheckAllButton.addEventListener("click", () => {
+    checkedIds.clear();
+    persist();
+    render();
+    setStatus("すべて未準備に戻しました");
+  });
 
   customForm.addEventListener("submit", (event) => {
     event.preventDefault();

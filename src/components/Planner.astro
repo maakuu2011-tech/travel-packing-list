@@ -123,7 +123,10 @@ import {
         <div class="progress-block">
           <div>
             <span>準備できたもの</span>
-            <strong data-progress-label>0 / 0</strong>
+            <div class="progress-block__actions">
+              <button type="button" data-uncheck-all disabled>チェックをすべて外す</button>
+              <strong data-progress-label>0 / 0</strong>
+            </div>
           </div>
           <div class="progress-track" aria-hidden="true">
             <span data-progress-bar></span>

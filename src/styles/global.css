@@ -575,11 +575,36 @@ h4 {
 
 .progress-block > div:first-child {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 8px;
   color: var(--ink-soft);
   font-size: 13px;
+}
+
+.progress-block__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.progress-block__actions button {
+  padding: 0;
+  color: var(--teal-dark);
+  background: transparent;
+  border: 0;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.progress-block__actions button:disabled {
+  color: #87938f;
+  text-decoration: none;
+  cursor: default;
 }
 
 .progress-block strong {
