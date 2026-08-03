@@ -8,6 +8,7 @@ if (root) {
   const countElement = root.querySelector("[data-result-count]");
   const summaryElement = root.querySelector("[data-trip-summary]");
   const progressLabel = root.querySelector("[data-progress-label]");
+  const progressTrack = root.querySelector("[data-progress-track]");
   const progressBar = root.querySelector("[data-progress-bar]");
   const uncheckAllButton = root.querySelector("[data-uncheck-all]");
   const itemSearch = root.querySelector("[data-item-search]");
@@ -387,6 +388,9 @@ if (root) {
     const total = currentItems.length;
     const percent = total ? Math.round((checkedCount / total) * 100) : 0;
     progressLabel.textContent = `${checkedCount} / ${total}`;
+    progressTrack.setAttribute("aria-valuemax", String(total));
+    progressTrack.setAttribute("aria-valuenow", String(checkedCount));
+    progressTrack.setAttribute("aria-valuetext", `${total}点中${checkedCount}点準備済み`);
     progressBar.style.width = `${percent}%`;
     uncheckAllButton.disabled = checkedCount === 0;
   };
@@ -515,7 +519,9 @@ if (root) {
     itemSearch.value = "";
     currentFilter = "all";
     root.querySelectorAll("[data-filter]").forEach((button) => {
-      button.classList.toggle("is-active", button.dataset.filter === "all");
+      const isActive = button.dataset.filter === "all";
+      button.classList.toggle("is-active", isActive);
+      button.setAttribute("aria-pressed", String(isActive));
     });
     try {
       localStorage.removeItem(storageKey);
@@ -530,7 +536,9 @@ if (root) {
     button.addEventListener("click", () => {
       currentFilter = button.dataset.filter;
       root.querySelectorAll("[data-filter]").forEach((entry) => {
-        entry.classList.toggle("is-active", entry === button);
+        const isActive = entry === button;
+        entry.classList.toggle("is-active", isActive);
+        entry.setAttribute("aria-pressed", String(isActive));
       });
       applyFilters();
     });

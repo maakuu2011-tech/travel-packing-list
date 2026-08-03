@@ -128,16 +128,25 @@ import {
               <strong data-progress-label>0 / 0</strong>
             </div>
           </div>
-          <div class="progress-track" aria-hidden="true">
+          <div
+            class="progress-track"
+            role="progressbar"
+            aria-label="持ち物の準備状況"
+            aria-valuemin="0"
+            aria-valuemax="0"
+            aria-valuenow="0"
+            aria-valuetext="0点中0点準備済み"
+            data-progress-track
+          >
             <span data-progress-bar></span>
           </div>
         </div>
 
         <div class="result-toolbar" aria-label="持ち物の絞り込み">
           <div class="filter-tabs" data-filter-tabs>
-            <button class="is-active" type="button" data-filter="all">すべて</button>
-            <button type="button" data-filter="open">未準備</button>
-            <button type="button" data-filter="essential">必須</button>
+            <button class="is-active" type="button" aria-pressed="true" data-filter="all">すべて</button>
+            <button type="button" aria-pressed="false" data-filter="open">未準備</button>
+            <button type="button" aria-pressed="false" data-filter="essential">必須</button>
           </div>
           <label class="result-search">
             <Search size={16} />
