@@ -22,7 +22,7 @@ const articleStructuredData = {
   description: guide.description,
   mainEntityOfPage: pageUrl,
   datePublished: "2026-07-28",
-  dateModified: "2026-07-28",
+  dateModified: guide.dateModified || "2026-07-28",
   author: {
     "@type": "Organization",
     name: "旅じたくリスト",
@@ -69,7 +69,7 @@ const faqStructuredData = {
 ---
 
 <Layout
-  title={`${guide.title}｜旅じたくリスト`}
+  title={`${guide.seoTitle || guide.title}｜旅じたくリスト`}
   description={guide.description}
   structuredData={[articleStructuredData, breadcrumbStructuredData, faqStructuredData]}
 >

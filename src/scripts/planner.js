@@ -141,7 +141,7 @@ if (root) {
       );
     }
 
-    if (config.destination === "eastAsia") {
+    if (["eastAsia", "taiwan"].includes(config.destination)) {
       items.push(
         item("local-payment", "現地で使える決済手段", "special", {
           note: "カードと少額の現金を分けて準備",
@@ -150,6 +150,20 @@ if (root) {
           essential: isInternational,
           note: "現地語表記も保存",
         }),
+      );
+    }
+
+    if (config.destination === "taiwan") {
+      items.push(
+        item("taiwan-transit-card", "交通系ICカード（悠遊カードなど）", "special", {
+          note: "空港や駅での購入・チャージ方法を確認",
+        }),
+        item("taiwan-rainwear", "折りたたみ傘・雨具", "special", {
+          essential: true,
+          note: "短時間の雨でも取り出しやすい場所へ",
+        }),
+        item("taiwan-light-layer", "冷房対策の薄い羽織", "clothes"),
+        item("taiwan-wipes", "ウェットティッシュ・小さなごみ袋", "comfort"),
       );
     }
 
@@ -286,6 +300,7 @@ if (root) {
     standard: "都市",
     beach: "海辺・常夏",
     eastAsia: "東アジア",
+    taiwan: "台湾",
     longHaul: "長距離",
     cold: "寒冷地",
   };

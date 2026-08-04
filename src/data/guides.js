@@ -172,10 +172,12 @@ export const guides = [
     category: "行き先別",
     tripLabel: "台湾・2泊3日",
     title: "台湾旅行の持ち物リスト",
-    description: "気温・雨・街歩きを踏まえ、台湾旅行で役立つ持ち物を短期旅行向けに整理します。",
+    seoTitle: "台湾旅行の持ち物リスト｜2泊3日の必需品・服装・雨対策",
+    dateModified: "2026-08-04",
+    description: "台湾旅行に必要なものを、2泊3日の街歩き向けに整理。パスポート、通信、決済、服装、雨・冷房対策をチェックできます。",
     intro:
       "台湾旅行は街歩きと屋外での移動が多くなりやすいため、履き慣れた靴、雨対策、暑さへの備えが重要です。入国・通信・決済の準備を先に済ませてから衣類を調整します。",
-    query: "trip=international&destination=eastAsia&nights=2&season=summer&transport=flight",
+    query: "trip=international&destination=taiwan&nights=2&season=summer&transport=flight",
     mustHaves: [
       ["パスポート", "航空券の氏名と同じ表記か確認します。"],
       ["通信手段", "現地到着時に使える状態へ準備します。"],
@@ -681,4 +683,3 @@ export const featuredGuideSlugs = [
   "business-trip-packing",
   "two-nights-three-days",
 ];
-
