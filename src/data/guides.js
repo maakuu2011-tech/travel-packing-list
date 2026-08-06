@@ -175,6 +175,7 @@ export const guides = [
     seoTitle: "台湾旅行の持ち物リスト｜2泊3日の必需品・服装・雨対策",
     dateModified: "2026-08-04",
     description: "台湾旅行に必要なものを、2泊3日の街歩き向けに整理。パスポート、通信、決済、服装、雨・冷房対策をチェックできます。",
+    relatedSlugs: ["overseas-travel-packing", "two-nights-three-days", "summer-trip-packing"],
     intro:
       "台湾旅行は街歩きと屋外での移動が多くなりやすいため、履き慣れた靴、雨対策、暑さへの備えが重要です。入国・通信・決済の準備を先に済ませてから衣類を調整します。",
     query: "trip=international&destination=taiwan&nights=2&season=summer&transport=flight",
@@ -568,7 +569,10 @@ export const guides = [
     category: "日数別",
     tripLabel: "1泊2日",
     title: "1泊2日の持ち物リスト",
-    description: "短い旅行で荷物を増やしすぎないために、1泊2日に必要な物と省ける物を整理します。",
+    seoTitle: "1泊2日の持ち物リスト｜荷物を減らす必需品・着替え",
+    dateModified: "2026-08-06",
+    description: "1泊2日の旅行に必要な持ち物と荷物を減らすコツを整理。財布、充電器、着替え、洗面用品を確認し、宿のアメニティで省ける物も分かります。",
+    relatedSlugs: ["domestic-trip-packing", "carry-on-only", "business-trip-packing"],
     intro:
       "1泊2日は大きな荷物を増やさず、移動に必要な物と翌日の着替えに絞るのが基本です。宿泊施設のアメニティを確認し、重複する洗面用品を減らします。",
     query: "trip=domestic&destination=standard&nights=1&season=spring&transport=train",
@@ -616,6 +620,7 @@ export const guides = [
       "1泊2日は『念のため』を増やすと急に荷物が大きくなります。現地で代用できる物より、忘れると移動できない物を優先します。",
     faqs: [
       ["1泊2日はどのくらいのバッグで足りますか？", "季節や仕事道具の有無によりますが、着替え1組と洗面用品が入る小型バッグで収まる場合が多いです。"],
+      ["1泊2日の荷物は何個にまとめるべきですか？", "移動しやすさを優先し、着替えと洗面用品を入れるバッグ1個を基本にします。財布やスマートフォンを頻繁に出す場合だけ、小さな外出用バッグへ分けます。"],
       ["寝巻きは持っていきますか？", "宿泊施設の館内着や寝巻きの有無を確認し、好みや衛生面で必要な場合だけ持参します。"],
     ],
   },

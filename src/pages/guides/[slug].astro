@@ -14,6 +14,9 @@ export function getStaticPaths() {
 const { guide } = Astro.props;
 const pageUrl = new URL(`/guides/${guide.slug}/`, SITE_URL).toString();
 const plannerUrl = `/?${guide.query}#planner`;
+const relatedGuides = (guide.relatedSlugs || [])
+  .map((slug) => guides.find((item) => item.slug === slug))
+  .filter((item) => item !== undefined);
 
 const articleStructuredData = {
   "@context": "https://schema.org",
@@ -130,6 +133,23 @@ const faqStructuredData = {
               ))}
             </div>
           </section>
+
+          {relatedGuides.length > 0 && (
+            <nav class="related-guides" aria-labelledby="related-guides-heading">
+              <h2 id="related-guides-heading">あわせて確認したい持ち物ガイド</h2>
+              <ul>
+                {relatedGuides.map((relatedGuide) => (
+                  <li>
+                    <a href={`/guides/${relatedGuide.slug}/`}>
+                      <span>{relatedGuide.tripLabel}</span>
+                      <strong>{relatedGuide.title}</strong>
+                      <ArrowRight size={17} aria-hidden="true" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )}
         </article>
 
         <aside class="article-sidebar">
