@@ -311,11 +311,14 @@ if (root) {
   };
 
   const createItemElement = (entry) => {
-    const row = document.createElement("label");
+    const row = document.createElement("div");
     row.className = "packing-item";
     row.dataset.itemId = entry.id;
     row.dataset.essential = String(entry.essential);
     row.dataset.searchText = `${entry.label} ${entry.note}`.toLowerCase();
+
+    const itemLabel = document.createElement("label");
+    itemLabel.className = "packing-item__label";
 
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
@@ -363,7 +366,26 @@ if (root) {
       copy.appendChild(note);
     }
 
-    row.append(checkbox, marker, copy);
+    itemLabel.append(checkbox, marker, copy);
+    row.appendChild(itemLabel);
+
+    if (entry.category === "custom") {
+      const deleteButton = document.createElement("button");
+      deleteButton.className = "custom-item-delete";
+      deleteButton.type = "button";
+      deleteButton.textContent = "削除";
+      deleteButton.setAttribute("aria-label", `${entry.label}を削除`);
+      deleteButton.addEventListener("click", () => {
+        customItems = customItems.filter((custom) => custom.id !== entry.id);
+        checkedIds.delete(entry.id);
+        currentItems = buildItems(currentConfig);
+        render();
+        persist();
+        setStatus(`${entry.label}を削除しました`);
+      });
+      row.appendChild(deleteButton);
+    }
+
     return row;
   };
 

@@ -701,10 +701,18 @@ h4 {
 .packing-item {
   min-width: 0;
   display: grid;
-  grid-template-columns: 22px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: start;
   gap: 9px;
   padding: 7px 2px;
+}
+
+.packing-item__label {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  align-items: start;
+  gap: 9px;
   cursor: pointer;
 }
 
@@ -772,6 +780,30 @@ h4 {
   color: var(--ink-soft);
   font-size: 11px;
   line-height: 1.55;
+}
+
+.custom-item-delete {
+  min-width: 44px;
+  min-height: 32px;
+  padding: 4px 8px;
+  color: var(--ink-soft);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.custom-item-delete:hover {
+  color: #9b342f;
+  border-color: #d7a09c;
+}
+
+.custom-item-delete:focus-visible {
+  outline: 3px solid rgba(27, 128, 117, 0.2);
+  outline-offset: 2px;
 }
 
 .quantity-badge,
@@ -1509,6 +1541,7 @@ h4 {
   .planner-form,
   .result-toolbar,
   .custom-item-form,
+  .custom-item-delete,
   .result-actions,
   .content-section,
   .status-message {
