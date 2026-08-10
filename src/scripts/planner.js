@@ -389,26 +389,29 @@ if (root) {
     return row;
   };
 
+  const createGroupElement = (categoryId, heading, entries) => {
+    const section = document.createElement("section");
+    section.className = "packing-group";
+    section.dataset.group = categoryId;
+
+    const title = document.createElement("h4");
+    title.textContent = heading;
+    section.appendChild(title);
+
+    const list = document.createElement("div");
+    list.className = "packing-list";
+    entries.forEach((entry) => list.appendChild(createItemElement(entry)));
+    section.appendChild(list);
+    return section;
+  };
+
   const render = () => {
     groupsElement.replaceChildren();
 
     categoryOrder.forEach(([categoryId, heading]) => {
       const entries = currentItems.filter((entry) => entry.category === categoryId);
       if (!entries.length) return;
-
-      const section = document.createElement("section");
-      section.className = "packing-group";
-      section.dataset.group = categoryId;
-
-      const title = document.createElement("h4");
-      title.textContent = heading;
-      section.appendChild(title);
-
-      const list = document.createElement("div");
-      list.className = "packing-list";
-      entries.forEach((entry) => list.appendChild(createItemElement(entry)));
-      section.appendChild(list);
-      groupsElement.appendChild(section);
+      groupsElement.appendChild(createGroupElement(categoryId, heading, entries));
     });
 
     countElement.textContent = `${currentItems.length}点`;
@@ -595,13 +598,25 @@ if (root) {
     const input = customForm.elements.customItem;
     const label = input.value.trim();
     if (!label) return;
-    customItems.push({
+    const customItem = {
       id: `custom-${Date.now()}`,
       label,
-    });
+    };
+    customItems.push(customItem);
     input.value = "";
-    currentItems = buildItems(currentConfig);
-    render();
+    const entry = item(customItem.id, customItem.label, "custom");
+    currentItems.push(entry);
+
+    const customGroup = groupsElement.querySelector('[data-group="custom"]');
+    if (customGroup) {
+      customGroup.querySelector(".packing-list")?.appendChild(createItemElement(entry));
+    } else {
+      groupsElement.appendChild(createGroupElement("custom", "自分で追加したもの", [entry]));
+    }
+
+    countElement.textContent = `${currentItems.length}点`;
+    updateProgress();
+    applyFilters();
     persist();
     setStatus("持ち物を追加しました");
   });
