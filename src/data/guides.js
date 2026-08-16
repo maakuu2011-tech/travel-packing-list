@@ -5,6 +5,7 @@ export const guides = [
     tripLabel: "海外・2泊以上",
     title: "海外旅行の持ち物リスト",
     description: "パスポート、通信、変換プラグなど、海外旅行で先に確認したい持ち物を出発準備の順に整理します。",
+    relatedSlugs: ["taiwan-trip-packing", "korea-trip-packing", "carry-on-only"],
     intro:
       "海外旅行は、現地で買える日用品よりも、入国・通信・決済に必要なものを先に固めるのが重要です。紙とスマートフォンの両方で控えを持ち、紛失時にも確認できる状態にしておきます。",
     query: "trip=international&destination=longHaul&nights=4&season=spring&transport=flight",
@@ -61,6 +62,7 @@ export const guides = [
     tripLabel: "国内・1泊以上",
     title: "国内旅行の持ち物リスト",
     description: "衣類、充電、予約情報など、国内旅行で必要なものを移動手段と宿泊日数に合わせて整理します。",
+    relatedSlugs: ["one-night-two-days", "two-nights-three-days", "family-trip-packing"],
     intro:
       "国内旅行は現地調達しやすい一方、移動や宿泊に必要なものを忘れると予定が崩れます。財布、スマートフォン、予約情報、薬を最優先にして、その後で衣類と洗面用品を整えます。",
     query: "trip=domestic&destination=standard&nights=2&season=spring&transport=train",
@@ -117,6 +119,7 @@ export const guides = [
     tripLabel: "韓国・2泊3日",
     title: "韓国旅行の持ち物リスト",
     description: "パスポート、通信、決済、変換プラグなど、韓国旅行の出発前に確認したい持ち物をまとめます。",
+    relatedSlugs: ["overseas-travel-packing", "two-nights-three-days", "carry-on-only"],
     intro:
       "韓国旅行では、入国・通信・決済に必要な準備を先に済ませます。短い日程でも、現地到着後すぐ使う地図、宿泊先住所、通信手段を手荷物にまとめておくと移動がスムーズです。",
     query: "trip=international&destination=eastAsia&nights=2&season=autumn&transport=flight",
@@ -232,6 +235,7 @@ export const guides = [
     tripLabel: "沖縄・2泊3日",
     title: "沖縄旅行の持ち物リスト",
     description: "強い日差し、海、急な雨を想定し、沖縄旅行で必要な持ち物を移動とアクティビティ別に整理します。",
+    relatedSlugs: ["summer-trip-packing", "two-nights-three-days", "domestic-trip-packing"],
     intro:
       "沖縄旅行では日差しと海への備えが中心になります。日焼け止め、帽子、水着、防水用品を追加し、冷房の効いた室内や飛行機で使う薄い羽織りも用意します。",
     query: "trip=domestic&destination=beach&nights=2&season=summer&transport=flight&styles=outdoor",
@@ -288,6 +292,7 @@ export const guides = [
     tripLabel: "子連れ・1泊以上",
     title: "子連れ旅行の持ち物リスト",
     description: "子どもの着替え、薬、移動中の飲食、退屈対策を年齢と日数に合わせて整理します。",
+    relatedSlugs: ["domestic-trip-packing", "one-night-two-days", "two-nights-three-days"],
     intro:
       "子連れ旅行は、現地で買える物を増やすより、移動中すぐ必要になる物を手元へ分けることが重要です。着替え、薬、飲み物、食べ慣れた物を小さなバッグへまとめます。",
     query: "trip=domestic&destination=standard&nights=2&season=spring&transport=train&styles=family",
@@ -346,6 +351,7 @@ export const guides = [
     seoTitle: "一人旅の持ち物リスト｜防犯・移動・緊急時の準備",
     dateModified: "2026-08-05",
     description: "一人旅に必要な持ち物を、防犯、移動、緊急時の備えに分けて整理。貴重品の分散や連絡先の保存も確認できます。",
+    relatedSlugs: ["domestic-trip-packing", "overseas-travel-packing", "carry-on-only"],
     intro:
       "一人旅では、荷物を自分だけで管理し、予定変更や体調不良にも自分で対応します。衣類を増やすより、連絡手段、決済手段、予約情報を失わない準備を優先し、移動中に必要な物を取り出しやすく分けます。",
     query: "trip=domestic&destination=standard&nights=2&season=autumn&transport=train&styles=solo",
@@ -402,6 +408,7 @@ export const guides = [
     tripLabel: "出張・1泊以上",
     title: "出張の持ち物リスト",
     description: "仕事道具、入館情報、服装、充電環境を優先し、出張で困らない持ち物を整理します。",
+    relatedSlugs: ["one-night-two-days", "carry-on-only", "domestic-trip-packing"],
     intro:
       "出張では、仕事を始めるために必要な機器・資料・入館情報を最優先にします。衣類や洗面用品より先に、パソコン、充電器、認証手段、訪問先情報を確認します。",
     query: "trip=domestic&destination=standard&nights=1&season=autumn&transport=train&styles=business,formal",
@@ -458,6 +465,7 @@ export const guides = [
     tripLabel: "冬・寒冷地",
     title: "冬旅行の持ち物リスト",
     description: "防寒、雪、乾燥、室内外の温度差に対応する冬旅行の持ち物を整理します。",
+    relatedSlugs: ["domestic-trip-packing", "two-nights-three-days", "carry-on-only"],
     intro:
       "冬旅行は厚手の服を増やすより、保温インナー、脱ぎ着できる中間着、防風性のあるアウターを組み合わせる方が調整しやすくなります。足元と乾燥対策も忘れずに確認します。",
     query: "trip=domestic&destination=cold&nights=2&season=winter&transport=train",
@@ -514,6 +522,7 @@ export const guides = [
     tripLabel: "夏・暑い地域",
     title: "夏旅行の持ち物リスト",
     description: "暑さ、日差し、汗、室内の冷房を想定した夏旅行の持ち物をまとめます。",
+    relatedSlugs: ["okinawa-trip-packing", "two-nights-three-days", "carry-on-only"],
     intro:
       "夏旅行では、汗をかいた後の着替え、日差し対策、水分補給を優先します。屋外用の暑さ対策だけでなく、交通機関や施設内の冷房に備える薄い羽織りも用意します。",
     query: "trip=domestic&destination=standard&nights=2&season=summer&transport=train",
@@ -690,6 +699,7 @@ export const guides = [
     tripLabel: "機内持ち込み",
     title: "機内持ち込みだけで旅行する持ち物リスト",
     description: "預け荷物を使わずに旅行するための衣類、液体物、充電機器のまとめ方を整理します。",
+    relatedSlugs: ["one-night-two-days", "two-nights-three-days", "overseas-travel-packing"],
     intro:
       "機内持ち込みだけで旅行する場合は、航空会社のサイズ・重量・個数制限を先に確認します。衣類を減らすだけでなく、液体物と電池を含む機器の扱いを整理する必要があります。",
     query: "trip=international&destination=eastAsia&nights=2&season=spring&transport=flight&styles=solo",
