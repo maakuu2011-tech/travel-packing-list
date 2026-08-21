@@ -16,6 +16,29 @@ const featuredGuides = featuredGuideSlugs
   .map((slug) => guides.find((guide) => guide.slug === slug))
   .filter(Boolean);
 
+const packingBasics = [
+  {
+    heading: "移動・宿泊に必要なもの",
+    items: ["財布・決済手段", "身分証明書", "交通・宿泊の予約情報"],
+  },
+  {
+    heading: "スマートフォンまわり",
+    items: ["スマートフォン", "充電器・ケーブル", "モバイルバッテリー"],
+  },
+  {
+    heading: "衣類",
+    items: ["日数分の下着・靴下", "着回せる服", "気温差に備える上着"],
+  },
+  {
+    heading: "洗面・健康用品",
+    items: ["歯みがき・スキンケア用品", "常備薬", "ハンカチ・ティッシュ"],
+  },
+  {
+    heading: "出発直前に確認するもの",
+    items: ["自宅の鍵", "当日の天気と運行情報", "必要な書類の有効期限"],
+  },
+];
+
 const softwareStructuredData = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
@@ -101,6 +124,30 @@ const softwareStructuredData = {
             </div>
           </div>
         </div>
+
+        <section class="packing-basics" aria-labelledby="packing-basics-title">
+          <div class="section-head">
+            <div>
+              <span class="section-kicker">PACKING BASICS</span>
+              <h2 id="packing-basics-title">旅行の持ち物リストの基本</h2>
+              <p>迷ったら、現地で代わりを用意しにくい物から順に確認します。</p>
+            </div>
+          </div>
+          <ol class="packing-basics__grid">
+            {packingBasics.map((group) => (
+              <li>
+                <h3>{group.heading}</h3>
+                <ul>
+                  {group.items.map((item) => <li>{item}</li>)}
+                </ul>
+              </li>
+            ))}
+          </ol>
+          <p class="packing-basics__note">
+            海外旅行ではパスポート・入国手続き・通信手段、子連れ旅行では医療情報や移動中の着替えなども加わります。
+            条件別の詳しい確認は<a href="/guides/">持ち物ガイド</a>を利用してください。
+          </p>
+        </section>
       </div>
     </section>
 
