@@ -74,6 +74,10 @@ if (root) {
         essential: true,
         note: "オフラインでも見られる状態にする",
       }),
+      item("home-key", "自宅の鍵", "documents", {
+        essential: true,
+        note: "出発時に使うバッグへ入れる",
+      }),
       item("medicine", "常備薬・処方薬", "documents", {
         essential: true,
         note: "必要日数より少し余裕を持たせる",
@@ -223,6 +227,21 @@ if (root) {
         item("etc", "ETCカード", "documents"),
         item("car-charger", "車載充電器", "devices"),
         item("driver-glasses", "運転用眼鏡・サングラス", "comfort"),
+      );
+    }
+
+    if (config.styles.includes("solo")) {
+      items.push(
+        item("emergency-contacts", "緊急連絡先の控え", "documents", {
+          essential: true,
+          note: "家族・宿泊先・保険会社などを紙やオフラインでも確認できるようにする",
+        }),
+        item("itinerary-share", "旅程・宿泊先の共有", "documents", {
+          note: "信頼できる人へ帰宅予定まで伝える",
+        }),
+        item("backup-payment", "予備の決済手段", "documents", {
+          note: "現金や予備カードを普段の財布と別に保管",
+        }),
       );
     }
 
