@@ -519,6 +519,61 @@ if (root) {
     };
   };
 
+  const readSharedState = () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("shared") !== "1") return null;
+
+    let sharedCustomItems = [];
+    try {
+      const parsedItems = JSON.parse(params.get("custom") || "[]");
+      if (Array.isArray(parsedItems)) {
+        sharedCustomItems = parsedItems
+          .filter(
+            (entry) =>
+              typeof entry?.id === "string" &&
+              entry.id.startsWith("custom-") &&
+              entry.id.length <= 80 &&
+              typeof entry.label === "string" &&
+              entry.label.trim().length > 0,
+          )
+          .slice(0, 100)
+          .map((entry) => ({ id: entry.id, label: entry.label.trim().slice(0, 40) }));
+      }
+    } catch {
+      sharedCustomItems = [];
+    }
+
+    const sharedCheckedIds = (params.get("checked") || "")
+      .split(",")
+      .filter((id) => /^[a-z0-9-]{1,80}$/i.test(id))
+      .slice(0, 200);
+
+    return {
+      customItems: sharedCustomItems,
+      checkedIds: sharedCheckedIds,
+    };
+  };
+
+  const buildShareUrl = () => {
+    const url = new URL(window.location.pathname, window.location.origin);
+    const params = url.searchParams;
+    const sharedCustomItems = customItems.slice(0, 100);
+    const currentItemIds = new Set(currentItems.map((entry) => entry.id));
+    const sharedCheckedIds = [...checkedIds]
+      .filter((id) => currentItemIds.has(id))
+      .slice(0, 200);
+    params.set("trip", currentConfig.tripType);
+    params.set("destination", currentConfig.destination);
+    params.set("nights", String(currentConfig.nights));
+    params.set("season", currentConfig.season);
+    params.set("transport", currentConfig.transport);
+    if (currentConfig.styles.length) params.set("styles", currentConfig.styles.join(","));
+    params.set("shared", "1");
+    if (sharedCustomItems.length) params.set("custom", JSON.stringify(sharedCustomItems));
+    if (sharedCheckedIds.length) params.set("checked", sharedCheckedIds.join(","));
+    return url.toString();
+  };
+
   const restore = () => {
     let saved = null;
     try {
@@ -527,8 +582,14 @@ if (root) {
       saved = null;
     }
 
-    if (saved?.checkedIds) checkedIds = new Set(saved.checkedIds);
-    if (saved?.customItems) customItems = saved.customItems;
+    const sharedState = readSharedState();
+    if (sharedState) {
+      checkedIds = new Set(sharedState.checkedIds);
+      customItems = sharedState.customItems;
+    } else {
+      if (saved?.checkedIds) checkedIds = new Set(saved.checkedIds);
+      if (saved?.customItems) customItems = saved.customItems;
+    }
 
     const queryConfig = readQueryConfig();
     const mergedConfig = {
@@ -664,18 +725,19 @@ if (root) {
   root.querySelector("[data-print]")?.addEventListener("click", () => window.print());
 
   root.querySelector("[data-share]")?.addEventListener("click", async () => {
+    const shareUrl = buildShareUrl();
     const shareData = {
       title: "旅じたくリスト",
       text: `${getTripSummary(currentConfig)}の持ち物リスト`,
-      url: window.location.href,
+      url: shareUrl,
     };
 
     try {
       if (navigator.share) {
         await navigator.share(shareData);
       } else {
-        await navigator.clipboard.writeText(window.location.href);
-        setStatus("共有用URLをコピーしました");
+        await navigator.clipboard.writeText(shareUrl);
+        setStatus("チェック状況を含む共有用URLをコピーしました");
       }
     } catch (error) {
       if (error?.name !== "AbortError") setStatus("共有できませんでした");
