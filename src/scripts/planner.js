@@ -253,6 +253,9 @@ if (root) {
           note: "予定より1組多め",
         }),
         item("child-medicine", "子ども用の薬・体温計", "special"),
+        item("child-hygiene", "年齢に合うおむつ・衛生用品", "special", {
+          note: "おしりふきや汚れ物用の袋も移動分は手荷物へ",
+        }),
         item("child-snacks", "食べ慣れたおやつ・飲み物", "special"),
         item("child-comfort", "移動中のおもちゃ・絵本", "special"),
         item("stroller", "抱っこひも・ベビーカー", "special"),
@@ -508,15 +511,25 @@ if (root) {
 
   const readQueryConfig = () => {
     const params = new URLSearchParams(window.location.search);
-    if (![...params.keys()].length) return null;
-    return {
-      tripType: params.get("trip") || undefined,
-      destination: params.get("destination") || undefined,
-      nights: params.get("nights") || undefined,
-      season: params.get("season") || undefined,
-      transport: params.get("transport") || undefined,
-      styles: params.get("styles")?.split(",").filter(Boolean) || [],
+    const config = {};
+    const parameterMap = {
+      trip: "tripType",
+      destination: "destination",
+      nights: "nights",
+      season: "season",
+      transport: "transport",
     };
+
+    Object.entries(parameterMap).forEach(([parameter, property]) => {
+      const value = params.get(parameter);
+      if (value) config[property] = value;
+    });
+
+    if (params.has("styles")) {
+      config.styles = params.get("styles")?.split(",").filter(Boolean) || [];
+    }
+
+    return Object.keys(config).length ? config : null;
   };
 
   const readSharedState = () => {
