@@ -109,6 +109,17 @@ if (root) {
       );
     }
 
+    if (config.nights >= 2) {
+      items.push(
+        item("packing-organizer", "衣類用の仕分け袋", "comfort", {
+          note: "2日目以降の着替えを分けて取り出しやすくする",
+        }),
+        item("foldable-bag", "折りたためる予備バッグ", "comfort", {
+          note: "帰りに土産が増えた時だけ使う",
+        }),
+      );
+    }
+
     return items;
   };
 
