@@ -37,6 +37,7 @@ if (root) {
     label,
     category,
     essential: false,
+    lastMinute: false,
     quantity: "",
     note: "",
     ...options,
@@ -63,23 +64,28 @@ if (root) {
     const items = [
       item("wallet", "財布・現金・決済用カード", "documents", {
         essential: true,
+        lastMinute: true,
         note: "普段使うものと予備を分けると安心",
       }),
-      item("phone", "スマートフォン", "documents", { essential: true }),
+      item("phone", "スマートフォン", "documents", { essential: true, lastMinute: true }),
       item("identity", "身分証明書", "documents", {
         essential: true,
+        lastMinute: true,
         note: "運転する場合は免許証も確認",
       }),
       item("booking", "予約情報・乗車券", "documents", {
         essential: true,
+        lastMinute: true,
         note: "オフラインでも見られる状態にする",
       }),
       item("home-key", "自宅の鍵", "documents", {
         essential: true,
+        lastMinute: true,
         note: "出発時に使うバッグへ入れる",
       }),
       item("medicine", "常備薬・処方薬", "documents", {
         essential: true,
+        lastMinute: true,
         note: "必要日数より少し余裕を持たせる",
       }),
       item("charger", "スマートフォン充電器", "devices", { essential: true }),
@@ -128,9 +134,10 @@ if (root) {
 
     if (isInternational) {
       items.push(
-        item("passport", "パスポート", "documents", { essential: true }),
+        item("passport", "パスポート", "documents", { essential: true, lastMinute: true }),
         item("entry-docs", "入国に必要な書類・登録", "documents", {
           essential: true,
+          lastMinute: true,
           note: "渡航先の最新条件を公式情報で確認",
         }),
         item("insurance", "海外旅行保険の情報", "documents"),
@@ -227,14 +234,17 @@ if (root) {
 
     if (config.transport === "train") {
       items.push(
-        item("station-ticket", "乗車用ICカード・切符", "documents", { essential: true }),
+        item("station-ticket", "乗車用ICカード・切符", "documents", {
+          essential: true,
+          lastMinute: true,
+        }),
         item("compact-snack", "移動中の軽食", "comfort"),
       );
     }
 
     if (config.transport === "car") {
       items.push(
-        item("car-key", "車のキー", "documents", { essential: true }),
+        item("car-key", "車のキー", "documents", { essential: true, lastMinute: true }),
         item("etc", "ETCカード", "documents"),
         item("car-charger", "車載充電器", "devices"),
         item("driver-glasses", "運転用眼鏡・サングラス", "comfort"),
@@ -348,6 +358,7 @@ if (root) {
     row.className = "packing-item";
     row.dataset.itemId = entry.id;
     row.dataset.essential = String(entry.essential);
+    row.dataset.lastMinute = String(entry.lastMinute);
     row.dataset.searchText = `${entry.label} ${entry.note}`.toLowerCase();
 
     const itemLabel = document.createElement("label");
@@ -473,10 +484,12 @@ if (root) {
     groupsElement.querySelectorAll(".packing-item").forEach((element) => {
       const isChecked = checkedIds.has(element.dataset.itemId);
       const isEssential = element.dataset.essential === "true";
+      const isLastMinute = element.dataset.lastMinute === "true";
       const matchesFilter =
         currentFilter === "all" ||
         (currentFilter === "open" && !isChecked) ||
-        (currentFilter === "essential" && isEssential);
+        (currentFilter === "essential" && isEssential) ||
+        (currentFilter === "last-minute" && isLastMinute);
       const matchesQuery = !query || element.dataset.searchText.includes(query);
       element.hidden = !(matchesFilter && matchesQuery);
     });
