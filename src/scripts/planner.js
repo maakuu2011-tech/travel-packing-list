@@ -78,6 +78,11 @@ if (root) {
         lastMinute: true,
         note: "オフラインでも見られる状態にする",
       }),
+      item("weather-transport", "現地の天気・気温・運行情報", "documents", {
+        essential: true,
+        lastMinute: true,
+        note: "出発前日に確認し、服装と移動予定を最終調整",
+      }),
       item("home-key", "自宅の鍵", "documents", {
         essential: true,
         lastMinute: true,
@@ -111,6 +116,9 @@ if (root) {
         item("skincare", "洗顔・スキンケア用品", "toiletries"),
         item("hair", "ヘアケア用品", "toiletries"),
         item("contact", "眼鏡・コンタクト用品", "toiletries"),
+        item("accommodation-amenities", "宿泊先の設備・アメニティ", "comfort", {
+          note: "歯ブラシ・寝巻き・タオルなど、持参が必要な物を確認",
+        }),
         item("laundry-bag", "使用済み衣類を分ける袋", "comfort"),
       );
     }
