@@ -446,9 +446,18 @@ if (root) {
     section.className = "packing-group";
     section.dataset.group = categoryId;
 
+    const header = document.createElement("div");
+    header.className = "packing-group__head";
+
     const title = document.createElement("h4");
     title.textContent = heading;
-    section.appendChild(title);
+
+    const progress = document.createElement("span");
+    progress.className = "packing-group__progress";
+    progress.dataset.groupProgress = categoryId;
+
+    header.append(title, progress);
+    section.appendChild(header);
 
     const list = document.createElement("div");
     list.className = "packing-list";
@@ -485,6 +494,25 @@ if (root) {
     progressTrack.setAttribute("aria-valuetext", `${total}点中${checkedCount}点準備済み`);
     progressBar.style.width = `${percent}%`;
     uncheckAllButton.disabled = checkedCount === 0;
+
+    categoryOrder.forEach(([categoryId, heading]) => {
+      const categoryItems = currentItems.filter((entry) => entry.category === categoryId);
+      if (!categoryItems.length) return;
+
+      const categoryChecked = categoryItems.filter((entry) => checkedIds.has(entry.id)).length;
+      const categoryRemaining = categoryItems.length - categoryChecked;
+      const categoryProgress = groupsElement.querySelector(
+        `[data-group-progress="${CSS.escape(categoryId)}"]`,
+      );
+      if (!categoryProgress) return;
+
+      categoryProgress.textContent = categoryRemaining ? `残り${categoryRemaining}点` : "完了";
+      categoryProgress.classList.toggle("is-complete", categoryRemaining === 0);
+      categoryProgress.setAttribute(
+        "aria-label",
+        `${heading}は${categoryItems.length}点中${categoryChecked}点準備済み`,
+      );
+    });
   };
 
   const applyFilters = () => {
