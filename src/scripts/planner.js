@@ -378,9 +378,9 @@ if (root) {
     checkbox.addEventListener("change", () => {
       if (checkbox.checked) checkedIds.add(entry.id);
       else checkedIds.delete(entry.id);
-      persist();
       updateProgress();
-      applyFilters();
+      if (currentFilter === "open") applyFilters();
+      schedulePersist();
     });
 
     const marker = document.createElement("span");
@@ -549,6 +549,19 @@ if (root) {
     } catch {
       // Private browsing or storage restrictions should not block the planner.
     }
+  };
+
+  let persistScheduled = false;
+  const schedulePersist = () => {
+    if (persistScheduled) return;
+    persistScheduled = true;
+
+    requestAnimationFrame(() => {
+      window.setTimeout(() => {
+        persistScheduled = false;
+        persist();
+      }, 0);
+    });
   };
 
   const applyConfigToForm = (config) => {
