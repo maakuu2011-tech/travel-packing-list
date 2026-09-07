@@ -215,6 +215,18 @@ if (root) {
       );
     }
 
+    if (["spring", "autumn"].includes(config.season)) {
+      items.push(
+        item("light-layer", "薄手の羽織・重ね着用の服", "clothes", {
+          essential: true,
+          note:
+            config.season === "spring"
+              ? "朝晩の冷えや、日中との気温差に合わせて脱ぎ着する"
+              : "朝晩の冷えと、移動先ごとの気温差に合わせて脱ぎ着する",
+        }),
+      );
+    }
+
     if (config.season === "summer") {
       items.push(
         item("cooling", "汗拭きシート・冷却用品", "special"),
@@ -356,9 +368,23 @@ if (root) {
     cold: "寒冷地",
   };
 
+  const seasonLabels = {
+    spring: "春",
+    summer: "夏",
+    autumn: "秋",
+    winter: "冬",
+    rainy: "雨の多い時期",
+  };
+
+  const transportLabels = {
+    flight: "飛行機",
+    train: "電車・新幹線",
+    car: "車",
+  };
+
   const getTripSummary = (config) => {
     const dayLabel = config.nights === 0 ? "日帰り" : `${config.nights}泊${config.nights + 1}日`;
-    return `${configLabels[config.tripType]}・${configLabels[config.destination]}・${dayLabel}`;
+    return `${configLabels[config.tripType]}・${configLabels[config.destination]}・${dayLabel}・${seasonLabels[config.season]}・${transportLabels[config.transport]}`;
   };
 
   const createItemElement = (entry) => {
