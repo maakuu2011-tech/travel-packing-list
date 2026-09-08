@@ -22,6 +22,8 @@ if (root) {
   let currentFilter = "all";
   let currentConfig = {};
 
+  const validFilters = new Set(["all", "open", "essential", "last-minute"]);
+
   const categoryOrder = [
     ["documents", "貴重品・手続き"],
     ["clothes", "衣類"],
@@ -562,6 +564,16 @@ if (root) {
     });
   };
 
+  const setFilter = (filter) => {
+    currentFilter = validFilters.has(filter) ? filter : "all";
+    root.querySelectorAll("[data-filter]").forEach((button) => {
+      const isActive = button.dataset.filter === currentFilter;
+      button.classList.toggle("is-active", isActive);
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+    applyFilters();
+  };
+
   const persist = () => {
     try {
       localStorage.setItem(
@@ -631,6 +643,11 @@ if (root) {
     return Object.keys(config).length ? config : null;
   };
 
+  const readQueryFilter = () => {
+    const filter = new URLSearchParams(window.location.search).get("filter");
+    return validFilters.has(filter) ? filter : "all";
+  };
+
   const readSharedState = () => {
     const params = new URLSearchParams(window.location.search);
     if (params.get("shared") !== "1") return null;
@@ -680,6 +697,7 @@ if (root) {
     params.set("season", currentConfig.season);
     params.set("transport", currentConfig.transport);
     if (currentConfig.styles.length) params.set("styles", currentConfig.styles.join(","));
+    if (currentFilter !== "all") params.set("filter", currentFilter);
     params.set("shared", "1");
     if (sharedCustomItems.length) params.set("custom", JSON.stringify(sharedCustomItems));
     if (sharedCheckedIds.length) params.set("checked", sharedCheckedIds.join(","));
@@ -709,6 +727,7 @@ if (root) {
       ...(queryConfig || {}),
     };
     applyConfigToForm(mergedConfig);
+    setFilter(readQueryFilter());
   };
 
   const generate = ({ updateUrl = true } = {}) => {
@@ -726,6 +745,7 @@ if (root) {
         transport: currentConfig.transport,
       });
       if (currentConfig.styles.length) params.set("styles", currentConfig.styles.join(","));
+      if (currentFilter !== "all") params.set("filter", currentFilter);
       history.replaceState({}, "", `${window.location.pathname}?${params}`);
     }
   };
@@ -749,12 +769,7 @@ if (root) {
     checkedIds = new Set();
     customItems = [];
     itemSearch.value = "";
-    currentFilter = "all";
-    root.querySelectorAll("[data-filter]").forEach((button) => {
-      const isActive = button.dataset.filter === "all";
-      button.classList.toggle("is-active", isActive);
-      button.setAttribute("aria-pressed", String(isActive));
-    });
+    setFilter("all");
     try {
       localStorage.removeItem(storageKey);
     } catch {
@@ -766,13 +781,7 @@ if (root) {
 
   root.querySelectorAll("[data-filter]").forEach((button) => {
     button.addEventListener("click", () => {
-      currentFilter = button.dataset.filter;
-      root.querySelectorAll("[data-filter]").forEach((entry) => {
-        const isActive = entry === button;
-        entry.classList.toggle("is-active", isActive);
-        entry.setAttribute("aria-pressed", String(isActive));
-      });
-      applyFilters();
+      setFilter(button.dataset.filter);
     });
   });
 

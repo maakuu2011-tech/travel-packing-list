@@ -13,7 +13,11 @@ export function getStaticPaths() {
 
 const { guide } = Astro.props;
 const pageUrl = new URL(`/guides/${guide.slug}/`, SITE_URL).toString();
-const plannerUrl = `/?${guide.query}#planner`;
+const plannerParams = new URLSearchParams(guide.query);
+if (!plannerParams.has("styles")) plannerParams.set("styles", "");
+const plannerUrl = `/?${plannerParams.toString()}#planner`;
+plannerParams.set("filter", "last-minute");
+const lastMinutePlannerUrl = `/?${plannerParams.toString()}#planner`;
 const relatedGuides = (guide.relatedSlugs || [])
   .map((slug) => guides.find((item) => item.slug === slug))
   .filter((item) => item !== undefined);
@@ -156,10 +160,16 @@ const faqStructuredData = {
           <ListChecks size={28} color="#1b8075" />
           <h2>この条件でリストを作る</h2>
           <p>{guide.tripLabel}向けの条件を入力した状態で、持ち物チェックリストを開きます。</p>
-          <a class="button button--primary" href={plannerUrl}>
-            リストを作る
-            <ArrowRight size={18} />
-          </a>
+          <div class="article-sidebar__actions">
+            <a class="button button--primary" href={plannerUrl}>
+              リストを作る
+              <ArrowRight size={18} />
+            </a>
+            <a class="button button--secondary" href={lastMinutePlannerUrl}>
+              出発直前だけ確認
+              <ArrowRight size={18} />
+            </a>
+          </div>
         </aside>
       </div>
     </div>

@@ -1216,6 +1216,11 @@ h4 {
   width: 100%;
 }
 
+.article-sidebar__actions {
+  display: grid;
+  gap: 8px;
+}
+
 .faq-list details {
   background: #fff;
   border: 1px solid var(--line);
