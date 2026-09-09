@@ -636,7 +636,8 @@ if (root) {
       if (value) config[property] = value;
     });
 
-    if (params.has("styles")) {
+    // Shared links describe the sender's styles, including an empty selection.
+    if (params.has("styles") || params.get("shared") === "1") {
       config.styles = params.get("styles")?.split(",").filter(Boolean) || [];
     }
 
