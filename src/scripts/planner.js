@@ -12,6 +12,8 @@ if (root) {
   const progressBar = root.querySelector("[data-progress-bar]");
   const uncheckAllButton = root.querySelector("[data-uncheck-all]");
   const itemSearch = root.querySelector("[data-item-search]");
+  const filterEmpty = root.querySelector("[data-filter-empty]");
+  const filterEmptyMessage = root.querySelector("[data-filter-empty-message]");
   const statusElement = root.querySelector("[data-status]");
   const customForm = root.querySelector("[data-custom-form]");
   const storageKey = "tabijitaku-list:v1";
@@ -545,6 +547,7 @@ if (root) {
 
   const applyFilters = () => {
     const query = itemSearch.value.trim().toLowerCase();
+    let visibleCount = 0;
     groupsElement.querySelectorAll(".packing-item").forEach((element) => {
       const isChecked = checkedIds.has(element.dataset.itemId);
       const isEssential = element.dataset.essential === "true";
@@ -556,12 +559,20 @@ if (root) {
         (currentFilter === "last-minute" && isLastMinute);
       const matchesQuery = !query || element.dataset.searchText.includes(query);
       element.hidden = !(matchesFilter && matchesQuery);
+      if (!element.hidden) visibleCount += 1;
     });
 
     groupsElement.querySelectorAll(".packing-group").forEach((group) => {
       const hasVisibleItems = [...group.querySelectorAll(".packing-item")].some((entry) => !entry.hidden);
       group.hidden = !hasVisibleItems;
     });
+
+    filterEmpty.hidden = visibleCount > 0;
+    filterEmptyMessage.textContent = visibleCount > 0
+      ? ""
+      : currentFilter === "open" && !query
+        ? "すべての持ち物が準備できました。出発前にもう一度確認しましょう。"
+        : "条件に合う持ち物はありません。検索語や絞り込みを変えて確認してください。";
   };
 
   const setFilter = (filter) => {
@@ -787,6 +798,12 @@ if (root) {
   });
 
   itemSearch.addEventListener("input", applyFilters);
+
+  root.querySelector("[data-clear-filters]").addEventListener("click", () => {
+    itemSearch.value = "";
+    setFilter("all");
+    itemSearch.focus();
+  });
 
   uncheckAllButton.addEventListener("click", () => {
     checkedIds.clear();

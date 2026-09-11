@@ -660,6 +660,18 @@ h4 {
   background: var(--forest);
 }
 
+.filter-empty {
+  padding: 24px 16px;
+  color: var(--ink-soft);
+  background: #f3f7f5;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.filter-empty p {
+  margin: 0 0 16px;
+}
+
 .result-search {
   position: relative;
   width: min(230px, 45%);
@@ -1641,6 +1653,7 @@ h4 {
   .planner-shell__head .button,
   .planner-form,
   .result-toolbar,
+  .filter-empty,
   .custom-item-form,
   .custom-item-delete,
   .result-actions,
