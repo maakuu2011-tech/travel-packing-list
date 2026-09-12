@@ -113,8 +113,8 @@ if (root) {
       items.push(
         item("tops", "トップス", "clothes", { quantity: clothesCount }),
         item("bottoms", "ボトムス", "clothes", { quantity: bottomCount }),
-        item("underwear", "下着", "clothes", { quantity: `${days}組`, essential: true }),
-        item("socks", "靴下", "clothes", { quantity: `${days}組` }),
+        item("underwear", "下着", "clothes", { quantity: clothesCount, essential: true }),
+        item("socks", "靴下", "clothes", { quantity: clothesCount }),
         item("sleepwear", "寝巻き", "clothes", { quantity: "1組" }),
         item("toothbrush", "歯ブラシ・歯みがき用品", "toiletries"),
         item("skincare", "洗顔・スキンケア用品", "toiletries"),
@@ -124,6 +124,14 @@ if (root) {
           note: "歯ブラシ・寝巻き・タオルなど、持参が必要な物を確認",
         }),
         item("laundry-bag", "使用済み衣類を分ける袋", "comfort"),
+      );
+    }
+
+    if (config.nights >= 7) {
+      items.push(
+        item("laundry-plan", "滞在中の洗濯・乾燥の確認", "comfort", {
+          note: "衣類は洗濯前提の目安です。洗える日と乾く時間を確認し、下着・靴下は次の洗濯までの分に予備1組を追加。洗濯しない場合は日数分へ調整",
+        }),
       );
     }
 
@@ -294,8 +302,8 @@ if (root) {
       items.push(
         item("child-id", "子どもの保険証・医療情報", "documents", { essential: true }),
         item("child-clothes", "子どもの着替え", "clothes", {
-          quantity: `${config.nights + 2}組`,
-          note: "予定より1組多め",
+          quantity: config.nights >= 7 ? "洗濯間隔に合わせて調整" : `${config.nights + 2}組`,
+          note: config.nights >= 7 ? "次の洗濯までの着替えに予備を追加。汚れやすさに合わせて多めに" : "予定より1組多め",
         }),
         item("child-medicine", "子ども用の薬・体温計", "special"),
         item("child-hygiene", "年齢に合うおむつ・衛生用品", "special", {
@@ -387,7 +395,7 @@ if (root) {
   };
 
   const getTripSummary = (config) => {
-    const dayLabel = config.nights === 0 ? "日帰り" : `${config.nights}泊${config.nights + 1}日`;
+    const dayLabel = config.nights === 0 ? "日帰り" : config.nights >= 7 ? "7泊以上" : `${config.nights}泊${config.nights + 1}日`;
     return `${configLabels[config.tripType]}・${configLabels[config.destination]}・${dayLabel}・${seasonLabels[config.season]}・${transportLabels[config.transport]}`;
   };
 
