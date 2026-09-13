@@ -843,9 +843,16 @@ if (root) {
 
     countElement.textContent = `${currentItems.length}点`;
     updateProgress();
-    applyFilters();
+    // Newly added items must remain visible even when a filter hides custom items.
+    const filtersCleared = itemSearch.value.trim() !== "" ||
+      ["essential", "last-minute"].includes(currentFilter);
+    itemSearch.value = "";
+    setFilter(currentFilter === "open" ? "open" : "all");
     persist();
-    setStatus("持ち物を追加しました");
+    input.focus();
+    setStatus(filtersCleared
+      ? "持ち物を追加しました。追加した項目を表示するため絞り込みを解除しました"
+      : "持ち物を追加しました");
   });
 
   root.querySelector("[data-copy]")?.addEventListener("click", async () => {
