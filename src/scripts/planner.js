@@ -603,6 +603,13 @@ if (root) {
           customItems,
         }),
       );
+      // Once saved, reload from this device instead of importing the original snapshot again.
+      const url = new URL(window.location.href);
+      if (url.searchParams.get("shared") === "1") {
+        ["shared", "checked", "custom"].forEach((key) => url.searchParams.delete(key));
+        url.searchParams.set("styles", currentConfig.styles.join(","));
+        history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+      }
     } catch {
       // Private browsing or storage restrictions should not block the planner.
     }
