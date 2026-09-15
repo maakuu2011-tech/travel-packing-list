@@ -4,11 +4,24 @@ import GuideCard from "../../components/GuideCard.astro";
 import { guides } from "../../data/guides.js";
 
 const categories = [...new Set(guides.map((guide) => guide.category))];
+const guideListStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "旅行の持ち物ガイド一覧",
+  numberOfItems: guides.length,
+  itemListElement: guides.map((guide, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: guide.title,
+    url: new URL(`/guides/${guide.slug}/`, Astro.site).toString(),
+  })),
+};
 ---
 
 <Layout
   title="旅行の持ち物ガイド一覧｜旅じたくリスト"
   description="海外、国内、韓国、台湾、沖縄、子連れ、一人旅、出張など、行き先・日数・季節別の旅行持ち物ガイドを掲載しています。"
+  structuredData={[guideListStructuredData]}
 >
   <main>
     <header class="page-hero">

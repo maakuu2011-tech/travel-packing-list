@@ -73,12 +73,25 @@ const faqStructuredData = {
     },
   })),
 };
+
+const itemListStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: `${guide.title}の必需品`,
+  numberOfItems: guide.mustHaves.length,
+  itemListElement: guide.mustHaves.map(([name, description], index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name,
+    description,
+  })),
+};
 ---
 
 <Layout
   title={`${guide.seoTitle || guide.title}｜旅じたくリスト`}
   description={guide.description}
-  structuredData={[articleStructuredData, breadcrumbStructuredData, faqStructuredData]}
+  structuredData={[articleStructuredData, breadcrumbStructuredData, faqStructuredData, itemListStructuredData]}
 >
   <main>
     <header class="page-hero">
