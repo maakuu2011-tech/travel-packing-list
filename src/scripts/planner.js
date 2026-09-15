@@ -97,9 +97,14 @@ if (root) {
         lastMinute: true,
         note: "必要日数より少し余裕を持たせる",
       }),
-      item("charger", "スマートフォン充電器", "devices", { essential: true }),
+      item("charger", "スマートフォン充電器", "devices", {
+        essential: true,
+        lastMinute: true,
+        note: "充電後にコンセントから外し、ケーブルと一緒に手荷物へ",
+      }),
       item("power-bank", "モバイルバッテリー", "devices", {
-        note: "飛行機では預けず手荷物へ",
+        lastMinute: true,
+        note: "充電後の入れ忘れを確認。飛行機では預けず手荷物へ",
       }),
       item("earphones", "イヤホン", "devices"),
       item("handkerchief", "ハンカチ・ティッシュ", "comfort"),
