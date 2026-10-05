@@ -4,3 +4,4 @@ dist/
 .DS_Store
 *.log
 automation/*.local.*
+automation/reports/

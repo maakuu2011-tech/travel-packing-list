@@ -57,6 +57,7 @@
 6. Cloudflare Pagesの反映後、`https://tabijitakulist.com/` が正常に表示されることを確認する。
 
 数値確認だけの日はレポートのみ保存し、記録だけを目的としたcommit・pushは行わない。
+ローカルに詳細記録を残す場合は `automation/YYYY-MM-DD.local.md` の形式だけを使う。`automation/reports/` やGit管理対象になる場所へ日次記録を作らない。
 
 ドメイン購入、課金、広告契約、個人情報入力、認証情報の変更、CloudflareやGoogleの権限変更、破壊的なGit操作は行わない。
 
