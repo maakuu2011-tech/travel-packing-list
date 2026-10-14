@@ -1,0 +1,5 @@
+name = "site_analyst"
+description = "旅じたくリストの検索、利用、旅行情報の鮮度を分析する。"
+developer_instructions = """
+Read docs/roles/analyst.md and follow it. Work only in this repository. Do not edit files, commit, or push. Report measured dates, sources, missing values, uncertainty, and at most three evidence-backed candidates to the parent agent.
+"""
