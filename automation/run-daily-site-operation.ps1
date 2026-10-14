@@ -1,17 +1,24 @@
 param(
   [switch]$DryRun,
-  [switch]$SmokeTest
+  [switch]$SmokeTest,
+  [ValidateSet('daily', 'weekly')]
+  [string]$Operation = 'daily'
 )
 
 $ErrorActionPreference = 'Stop'
 
 $projectPath = 'C:\Users\maaku\Documents\Codex\travel-packing-list'
-$promptPath = Join-Path $projectPath 'automation\daily-site-operation.prompt.md'
+$promptFile = if ($Operation -eq 'weekly') { 'weekly-growth-research.prompt.md' } else { 'daily-site-operation.prompt.md' }
+$promptPath = Join-Path $projectPath "automation\$promptFile"
 $logDirectory = 'C:\Users\maaku\.codex\site-automation-logs\travel-packing-list'
-$lockPath = Join-Path $logDirectory 'running.lock'
+$lockFile = if ($Operation -eq 'weekly') { 'weekly-running.lock' } else { 'running.lock' }
+$lockPath = Join-Path $logDirectory $lockFile
 $timestamp = Get-Date -Format 'yyyy-MM-dd_HHmmss'
-$logPath = Join-Path $logDirectory "$timestamp.log"
-$reportPath = Join-Path $logDirectory "$timestamp-report.md"
+$logName = if ($Operation -eq 'weekly') { "$timestamp-weekly.log" } else { "$timestamp.log" }
+$reportName = if ($Operation -eq 'weekly') { "$timestamp-weekly-report.md" } else { "$timestamp-report.md" }
+$logPath = Join-Path $logDirectory $logName
+$reportPath = Join-Path $logDirectory $reportName
+$ownsLock = $false
 
 New-Item -ItemType Directory -Path $logDirectory -Force | Out-Null
 
@@ -20,6 +27,7 @@ try {
     "Started: $(Get-Date -Format o)"
     "User: $([System.Security.Principal.WindowsIdentity]::GetCurrent().Name)"
     "Project: $projectPath"
+    "Operation: $Operation"
   ) | Set-Content -LiteralPath $logPath -Encoding UTF8
 
   if (Test-Path -LiteralPath $lockPath) {
@@ -33,6 +41,7 @@ try {
   }
 
   New-Item -ItemType File -Path $lockPath -Force | Out-Null
+  $ownsLock = $true
 
   if (-not (Test-Path -LiteralPath $promptPath)) {
     throw "Prompt file was not found: $promptPath"
@@ -95,7 +104,7 @@ catch {
   exit 1
 }
 finally {
-  if (Test-Path -LiteralPath $lockPath) {
+  if ($ownsLock -and (Test-Path -LiteralPath $lockPath)) {
     Remove-Item -LiteralPath $lockPath -Force
   }
 }

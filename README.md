@@ -21,8 +21,10 @@ npm run build
 
 - 本番: https://tabijitakulist.com/
 - 日次実行の入口: `automation/daily-site-operation.prompt.md`
+- 週次 Growth Research の入口: `automation/weekly-growth-research.prompt.md`（月曜13:30のWindowsタスク）
 - 共通ルール: `AGENTS.md`
 - KPI、旅行情報の鮮度、公開手順: `docs/site-operations.md`
+- 週次・月次の確定データ: `docs/growth-status.md`
 - 分析・戦略・実装・レビューの担当: `docs/roles/`
 - 継続する判断: `docs/DECISIONS.md`
 
