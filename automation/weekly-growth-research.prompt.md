@@ -6,7 +6,7 @@
 
 1. `AGENTS.md`、`docs/site-operations.md`、`docs/growth-status.md`、`docs/roles/`、既存ガイドとチェックリスト機能を読む。
 2. `git status`、ブランチ、`origin/main` との差を確認する。未コミット変更があれば混ぜずに公開作業を止め、状態を報告する。きれいなら `git pull --ff-only` する。
-3. 同じ週の Growth Research が済んでいれば重複実行しない。本番と直近の変更を確認する。
+3. 同じ週の Growth Research が済んでいれば調査と施策判断を重複実行しない。ただし `docs/growth-status.md` にその週の確定値が記録されているか確認し、未記録なら同週の実測メモと取得元を照合して追記する。値が取れなければ「計測不可」と記す。本番と直近の変更も確認する。
 
 ## 順序
 
