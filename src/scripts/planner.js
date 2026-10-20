@@ -63,6 +63,7 @@ if (root) {
     const days = config.nights + 1;
     const overnight = config.nights > 0;
     const clothesCount = config.nights >= 7 ? "4〜5組（洗濯前提）" : `${days}組`;
+    const clothesNote = config.nights >= 7 ? "" : `着て行く1組を含む。バッグに入れる替えは${config.nights}組`;
     const bottomCount = config.nights >= 7 ? "3本前後" : `${Math.max(1, Math.ceil(days / 2))}本`;
 
     const items = [
@@ -116,10 +117,10 @@ if (root) {
 
     if (overnight) {
       items.push(
-        item("tops", "トップス", "clothes", { quantity: clothesCount }),
+        item("tops", "トップス", "clothes", { quantity: clothesCount, note: clothesNote }),
         item("bottoms", "ボトムス", "clothes", { quantity: bottomCount }),
-        item("underwear", "下着", "clothes", { quantity: clothesCount, essential: true }),
-        item("socks", "靴下", "clothes", { quantity: clothesCount }),
+        item("underwear", "下着", "clothes", { quantity: clothesCount, note: clothesNote, essential: true }),
+        item("socks", "靴下", "clothes", { quantity: clothesCount, note: clothesNote }),
         item("sleepwear", "寝巻き", "clothes", { quantity: "1組" }),
         item("toothbrush", "歯ブラシ・歯みがき用品", "toiletries"),
         item("skincare", "洗顔・スキンケア用品", "toiletries"),
