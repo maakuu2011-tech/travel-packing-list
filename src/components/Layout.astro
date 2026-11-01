@@ -15,6 +15,7 @@ const {
   description = "旅行条件に合わせて必要な持ち物を整理できる、無料の旅行持ち物チェックリストです。",
   image = "/images/packing-hero.webp",
   structuredData = [],
+  noindex = false,
 } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, SITE_URL).toString();
@@ -35,12 +36,13 @@ const structuredDataItems = [websiteStructuredData, ...structuredData];
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalUrl} />
+    {noindex && <meta name="robots" content="noindex" />}
+    {!noindex && <link rel="canonical" href={canonicalUrl} />}
     <meta property="og:site_name" content="旅じたくリスト" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalUrl} />
+    {!noindex && <meta property="og:url" content={canonicalUrl} />}
     <meta property="og:image" content={socialImageUrl} />
     <meta property="og:image:alt" content="旅行の荷造りをしているスーツケース" />
     <meta name="twitter:card" content="summary_large_image" />
