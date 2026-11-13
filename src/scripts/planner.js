@@ -227,10 +227,30 @@ if (root) {
     if (config.destination === "cold" || config.season === "winter") {
       items.push(
         item("warm-outer", "防寒アウター", "clothes", { essential: true }),
-        item("thermal", "保温インナー", "clothes", { quantity: "1〜2組" }),
+        item("thermal", "保温インナー", "clothes", {
+          quantity: config.nights >= 7 ? "次の洗濯までの分＋予備1組" : `${config.nights + 1}組`,
+          note: config.nights >= 7
+            ? "洗濯できる日と乾く時間を確認。洗濯しない場合は日数分へ調整"
+            : config.nights === 0
+              ? "着て行く1組。気温に合わせて重ね着する"
+              : `着て行く1組を含む。バッグに入れる替えは${config.nights}組`,
+        }),
         item("gloves", "手袋・マフラー", "special"),
         item("lip-balm", "リップクリーム・保湿用品", "toiletries"),
       );
+    }
+
+    if (config.destination === "cold") {
+      items.push(
+        item("cold-shoes", "滑りにくく歩きやすい靴", "clothes", {
+          essential: true,
+          note: "現地の積雪・凍結や雨に合わせ、靴底・防水性・歩きやすさを確認。履いて行く一足でよい",
+        }),
+      );
+    }
+
+    if (config.destination === "cold" || config.season === "rainy") {
+      items.push(item("spare-socks", "予備の靴下", "clothes", { quantity: "1組追加" }));
     }
 
     if (["spring", "autumn"].includes(config.season)) {
@@ -257,7 +277,6 @@ if (root) {
       items.push(
         item("umbrella", "折りたたみ傘", "special", { essential: true }),
         item("rain-cover", "バッグ用の防水袋", "special"),
-        item("spare-socks", "替えの靴下", "clothes", { quantity: "1組追加" }),
       );
     }
 
@@ -340,8 +359,10 @@ if (root) {
     }
 
     if (config.styles.includes("outdoor")) {
+      if (config.destination !== "cold") {
+        items.push(item("outdoor-shoes", "歩きやすい靴", "special", { essential: true }));
+      }
       items.push(
-        item("outdoor-shoes", "歩きやすい靴", "special", { essential: true }),
         item("outdoor-layer", "脱ぎ着しやすい上着", "clothes"),
         item("outdoor-towel", "タオル", "special"),
         item("outdoor-bag", "ごみ・濡れ物用の袋", "special"),
