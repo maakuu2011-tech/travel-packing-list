@@ -227,6 +227,10 @@ if (root) {
     if (config.destination === "cold" || config.season === "winter") {
       items.push(
         item("warm-outer", "防寒アウター", "clothes", { essential: true }),
+        item("warm-mid-layer", "脱ぎ着できる中間着", "clothes", {
+          quantity: "1枚",
+          note: "室内外の温度差に合わせて調整しやすいもの",
+        }),
         item("thermal", "保温インナー", "clothes", {
           quantity: config.nights >= 7 ? "次の洗濯までの分＋予備1組" : `${config.nights + 1}組`,
           note: config.nights >= 7
@@ -362,8 +366,10 @@ if (root) {
       if (config.destination !== "cold") {
         items.push(item("outdoor-shoes", "歩きやすい靴", "special", { essential: true }));
       }
+      if (config.destination !== "cold" && config.season !== "winter") {
+        items.push(item("outdoor-layer", "脱ぎ着しやすい上着", "clothes"));
+      }
       items.push(
-        item("outdoor-layer", "脱ぎ着しやすい上着", "clothes"),
         item("outdoor-towel", "タオル", "special"),
         item("outdoor-bag", "ごみ・濡れ物用の袋", "special"),
       );
