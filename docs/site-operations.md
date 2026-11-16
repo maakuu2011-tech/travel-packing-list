@@ -1,15 +1,15 @@
 # 旅じたくリスト 運営基準
 
-## 現状（2026-10-14、リポジトリ確認）
+## 現状（2026-11-16、リポジトリ・管理画面確認）
 
 - Astro の静的サイト。条件別チェックリストと13本のガイドがあり、`main` から Cloudflare Pages に公開する日次指示がある。
 - canonical、sitemap、robots.txt、OGP、Article・Breadcrumb・FAQ・ItemList 等の構造化データ、関連記事からチェックリストへの導線がある。
-- このリポジトリに CI、Search Console / Cloudflare の自動取得、成果イベント計測、広告・アフィリエイトリンクは見当たらない。サービス側の設定や実測値は未確認。
+- このリポジトリに CI、Search Console / Cloudflare の API 自動取得、成果イベント計測、広告・アフィリエイトリンクは見当たらない。2026-11-16 に Search Console のドメインプロパティ `sc-domain:tabijitakulist.com` を確認し、直近7日（2026-11-08～2026-11-14）はクリック8、表示273、CTR 2.9%、平均掲載順位12.7だった。Cloudflare はログイン済み画面へ到達できたが、指標画面が読み込み中のままで当日の実測値は取得できていない。
 - ガイドの Article 公開日は共通の固定日で、変更日がない記事には同じ固定日を使う。公開日・変更日の正確さは各記事の履歴と照合してから直す。
 
 ## 分析と KPI
 
-日次は稼働と異常を確認し、週次に同じ曜日・同じ長さの期間を比較する。Search Console は確定済みの直近28日と前の28日、Cloudflare は同じ28日を基本にする。対象期間、取得日、取得元、検索タイプ、欠測を必ず記す。少数標本の CTR や順位の差を成功と断定しない。
+日次は稼働と異常を確認し、週次に同じ曜日・同じ長さの期間を比較する。Search Console はログイン済み画面で利用できるドメインプロパティ `sc-domain:tabijitakulist.com` を基準にし、確定済みの直近28日と前の28日を比較する。Cloudflare は同じ28日を基本にする。対象期間、取得日、取得元、プロパティ種別、検索タイプ、欠測を必ず記す。少数標本の CTR や順位の差を成功と断定しない。
 
 分析画面が取得できない日も運用は止めず、前回の確定値を過去値として区別したうえで、本番の主要導線、既存ガイド、チェックリスト機能、PC・スマートフォン表示を確認する。毎日少なくとも1つのガイドからチェックリストへ進み、生成と保存・印刷・共有のいずれかを実地確認する。前回の日次レポートから確認済みガイドと次回対象を引き継ぎ、同じ対象だけに偏らないようローテーションする。再現可能な問題や明確な内容不足があれば、その日の実装候補とする。
 
@@ -44,7 +44,7 @@
 
 ## 週次 Growth Research（月曜日）
 
-入口は `automation/weekly-growth-research.prompt.md`。Windows の週次タスク `Codex-TabijitakuList-Weekly-Growth` が毎週月曜13:30に起動する。日次の4役はそのまま維持し、週次だけ新しい検索需要を調べる `site_growth_researcher` を戦略判断の前に加える。独立した担当が使える場合も、Growth Research→Strategist→Developer→Reviewer の依存順を守る。
+入口は `automation/weekly-growth-research.prompt.md`。Codexアプリ内の同一タスクで動く日次自動化が、月曜日の実行時に週次調査も続けて行う。旧Windowsタスク `Codex-TabijitakuList-Daily` と `Codex-TabijitakuList-Weekly-Growth` は、ログイン済みブラウザへ接続できないため停止している。日次の4役はそのまま維持し、週次だけ新しい検索需要を調べる `site_growth_researcher` を戦略判断の前に加える。独立した担当が使える場合も、Growth Research→Strategist→Developer→Reviewer の依存順を守る。
 
 1. Search Console の確定済み直近28日と前28日を比較し、Cloudflare も比較可能な同期間を確認する。
 2. 前年同時期データがあれば季節性を確認する。季節が異なる28日比較だけで需要を断定しない。
