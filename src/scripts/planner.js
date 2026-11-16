@@ -772,16 +772,22 @@ if (root) {
       saved = null;
     }
 
+    const queryConfig = readQueryConfig();
+    const isDifferentTrip = queryConfig && saved?.config && Object.entries(queryConfig).some(([key, value]) => {
+      const previous = saved.config[key];
+      return key === "styles"
+        ? [...(previous || [])].sort().join(",") !== [...value].sort().join(",")
+        : String(previous) !== String(value);
+    });
     const sharedState = readSharedState();
     if (sharedState) {
       checkedIds = new Set(sharedState.checkedIds);
       customItems = sharedState.customItems;
-    } else {
+    } else if (!isDifferentTrip) {
       if (saved?.checkedIds) checkedIds = new Set(saved.checkedIds);
       if (saved?.customItems) customItems = saved.customItems;
     }
 
-    const queryConfig = readQueryConfig();
     const mergedConfig = {
       ...(saved?.config || {}),
       ...(queryConfig || {}),
